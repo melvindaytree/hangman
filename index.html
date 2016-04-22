@@ -20,7 +20,31 @@
         <![endif]-->
 
         <!-- Add your site or application content here -->
-        <p>Hello world! This is HTML5 Boilerplate.</p>
+        <div id="header">
+            <h1>Hangman</h1>
+            <h4>created by <a href="https://github.com/melvindaytree">Melvin Daytree</a></h4>
+            
+        </div>
+        
+        <div id="hangman"> 
+            <div id="rope" class="man1"></div>
+            <div id="head" class="man2"></div>
+            <div id="body" class="man3"></div>
+            <div id="larm" class="man4"></div>
+            <div id="rarm" class="man5"></div>
+            <div id="lfoot" class="man6"></div>
+            <div id="rfoot" class="man7"></div>
+
+        </div>
+        <div id="word">
+        </div>
+        <div id="guess"></div>
+        <div id="winner"></div>
+        <div id="wrong"></div>
+        <form class="wrapper">
+        <input type="text" id="submission" required class="underlinedField">
+        <button id="submit" type="button">Submit</button>
+    </form>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.3.min.js"><\/script>')</script>
