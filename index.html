@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title></title>
+        <title>Hangman</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -40,8 +40,10 @@
         </div>
         <div id="guess"></div>
         <div id="winner"></div>
-        <div id="wrong"></div>
-        <form class="wrapper">
+        <div id="wrong">
+            <ul></ul>
+        </div>
+        <form class="wrapper" onsubmit="return block()" autocomplete="off">
         <input type="text" id="submission" required class="underlinedField">
         <button id="submit" type="button">Submit</button>
     </form>

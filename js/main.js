@@ -1,3 +1,5 @@
+// Log the letters to the screen
+
 function fancyLog(text) {
   var para = document.createElement("p");
   para.classList.add("float-left");
@@ -17,6 +19,12 @@ function fancyLog2(text, i) {
 		
 }
 
+String.prototype.replaceAt=function(index, character) {
+    return this.substr(0, index) + character + this.substr(index+character.length);
+}
+
+//reset the screen
+
 function reset() {
 						$("#word").empty();
 						getWord();
@@ -25,9 +33,20 @@ function reset() {
 						counter = 0;
 						$(".wrapper").css("display", "block");
 						man = 0;
+						$(".man1").css("display", "none");
+						$(".man2").css("display", "none");
+						$(".man3").css("display", "none");
+						$(".man4").css("display", "none");
+						$(".man5").css("display", "none");
+						$(".man6").css("display", "none");
+						$(".man7").css("display", "none");
+						gameWin = 0;
+						
 }
 
 var chosen = "word";
+
+//get the word from the json file
 
 function getWord() {
 
@@ -43,12 +62,11 @@ function getWord() {
 		
 		  word = JSON.parse(ajaxCall.responseText);
 
-		  var chosen2 = word[Math.floor(Math.random() * 6) + 1  ];
+		  var chosen2 = word[Math.floor(Math.random() * 33) + 1  ];
 		  	chosen = chosen2.word;
 
 
 		  for (var i = 0; i < chosen.length; i++) {
-    		console.log(chosen.charAt(i));
     		fancyLog2(chosen.charAt(i), i);
     		//draw an underscore for character 
     		//wrap each letter in a span and give them diff classes 
@@ -73,21 +91,59 @@ getWord();
 
 var counter = 0;
 var man = 0;
+var letterRight = true;
+var subLetter = document.querySelector('#submission').value;
+var gameWin = 0;
 
 function compare() {
 
 
 
 var subLetter = document.querySelector('#submission').value;
+subLetter = subLetter.toLowerCase();
+
+
+//Check if there is a letter
+if (subLetter != "") {
+//How many hangman items are displayed
 counter ++;
+//Loop through word with letter
 for (var i = 0; i < chosen.length; i++) {
-    		console.log(chosen.charAt(i));
 	    		if ( subLetter === chosen.charAt(i)) {
 					$(".color" + i).css( "transition", "all .5s");
 					$(".color" + i).css( "color", "green");
-	    		}
-				
-				else if ( subLetter === chosen){
+					letterRight = true;
+					gameWin++;
+					
+					if (chosen.split(subLetter).length-1 > 1) {
+							str = chosen.replaceAt(i, "2");
+							letterRight = true;
+							gameWin++;
+							
+							for (var i = 0; i < str.length; i++) {
+								if ( subLetter === str.charAt(i)) {
+								$(".color" + i).css( "transition", "all .5s");
+								$(".color" + i).css( "color", "green");
+								}
+							}
+					}
+					
+					console.log(gameWin);
+					//Get this working
+					if (chosen.length === gameWin) {
+					$("#winner").html("Congrats you won! It took you " + counter + " moves. Click here to play again!");
+					$(".wrapper").css("display", "none");
+					letterRight = true;
+					break;
+						}
+							
+					break;
+					
+					}
+					
+	    		
+				//Check if word is correct
+				else if (subLetter === chosen) {
 					
 					for (var i = 0; i < chosen.length; i++) {
 					
@@ -96,63 +152,64 @@ for (var i = 0; i < chosen.length; i++) {
 					
 					}
 					$("#winner").html("Congrats you won! It took you " + counter + " moves. Click here to play again!");
-					console.log(counter);
 					$(".wrapper").css("display", "none");
-					$("#winner").click(function () {
-						reset();
-					});
+					letterRight = true;
+					
 					break;
 				}
 
 	    		else {
+						letterRight = false;
+						
+						
+							
+							
+						}
+	    			
+	    		
+		}
+						
 					
-					if (subLetter !== chosen.slice(-1)) {
+							
+//Add letter to wrong scoreboard
+if (letterRight === false) {
 						fancyLog(subLetter);
-						console.log(chosen.slice(-1));
 						man ++;
 						$(".man" + man).css("display", "block");
-						console.log(man);
 						
 						if (man === 7) {
 							$("#winner").html("Sorry you lost! Click here to play again!");
 							$(".wrapper").css("display", "none");
-							$("#winner").click(function () {
-								reset();
-							});
 							
-						}
-	    			
-	    		}
-		}
+							for (var i = 0; i < chosen.length; i++) {
+					
+								$(".color" + i).css( "transition", "all .5s");
+								$(".color" + i).css( "color", "green");
+					
+							}
+}
+}
 
 document.querySelector('#submission').value = "";
+
+
+}
+else {
+	alert("You did not put in a letter!")
 }
 }
 
-/*
-
-function answer() {
-	if (document.getElementById("submission") === word) {
-		fancyLog("Great Job it took you" number " tries!")
-	}
-
-	else {
-		fancyLog("Sorry thats not right")
-	}
-}
-
-/*
-
-var arr = ["Jee", "bee", "gee"];
-function test() {
-	var chosen1 = arr[Math.floor(Math.random() * 3) + 1  ];
-		  alert(chosen1);
-}
-
-test();
-
-*/
+//Add Buttons
 
 document.querySelector('#submit').addEventListener('click', function() {
 	compare();
 });
+
+$("#winner").click(function () {
+								reset();
+							});
+							
+function block() {
+	compare();
+	return false;
+}

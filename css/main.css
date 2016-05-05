@@ -103,6 +103,15 @@ body {
 
 a {
     text-decoration: none;
+    transition: all .5s linear;
+}
+
+a:hover {
+    color:white;
+}
+
+h1 {
+    font-family: cursive;
 }
 
 #header {
@@ -110,9 +119,10 @@ a {
 }
 
 #hangman {
-margin:auto;
+    margin:auto;
     margin-top: -16%;
-        width: 150px;
+    width: 150px;
+    height: 308px;
 }
 
 #rope {
@@ -149,7 +159,7 @@ margin:auto;
     transform: rotate(37deg);
     float: left;
     margin-top: -129px;
-    margin-left: 31px;
+    margin-left: 29px;
     border-radius: 10px;
 }
 #rarm {
@@ -196,7 +206,7 @@ margin:auto;
     margin-top: 10%;
     font-size: 50px;
     letter-spacing: 30px;
-    color: #14B9EF;
+    color: rgba(0,0,0,0);;
 }
 
 #wrong {
@@ -221,6 +231,10 @@ margin:auto;
     transition: .5s linear;
 }
 
+input:focus {
+    outline: none; 
+    }
+
 #submit:hover {
     background-color: #9792DC;
     border: 2px solid #FFE2E2;
@@ -229,7 +243,7 @@ margin:auto;
 .wrapper {
    width: 34%;
     margin: auto;
-    margin-top: 12%;
+    margin-top: 10%;
     text-align: center;
 }
 
