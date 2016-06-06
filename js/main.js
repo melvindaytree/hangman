@@ -41,6 +41,7 @@ function reset() {
 						$(".man6").css("display", "none");
 						$(".man7").css("display", "none");
 						gameWin = 0;
+						letterArray = [];
 						
 }
 
@@ -94,6 +95,8 @@ var man = 0;
 var letterRight = true;
 var subLetter = document.querySelector('#submission').value;
 var gameWin = 0;
+var letterArray = [];
+var duplicate = 1;
 
 function compare() {
 
@@ -103,7 +106,129 @@ var subLetter = document.querySelector('#submission').value;
 subLetter = subLetter.toLowerCase();
 
 
-//Check if there is a letter
+console.log(letterArray);
+
+//Check if letter is duplicate
+for (i = 0; i <= letterArray.length; i++) {
+	if (subLetter === letterArray[i]){
+		duplicate = 0;
+		break;
+	}
+	
+	else {
+		duplicate = 1;
+	}
+}
+	
+	if (duplicate === 0) {
+		alert("You already used that letter!");
+		document.querySelector('#submission').value = "";
+	}
+	
+//Check if there is a letter	
+	else if (subLetter === "") {
+		alert("You did not put in a letter!");
+	}
+	
+	else {
+		 
+//How many hangman items are displayed
+counter ++;
+//Loop through word with letter
+for (var i = 0; i < chosen.length; i++) {
+	    		if ( subLetter === chosen.charAt(i)) {
+					$(".color" + i).css( "transition", "all .5s");
+					$(".color" + i).css( "color", "green");
+					letterRight = true;
+					gameWin++;
+					
+					if (chosen.split(subLetter).length-1 > 1) {
+							str = chosen.replaceAt(i, "2");
+							letterRight = true;
+							gameWin++;
+							
+							for (var i = 0; i < str.length; i++) {
+								if ( subLetter === str.charAt(i)) {
+								$(".color" + i).css( "transition", "all .5s");
+								$(".color" + i).css( "color", "green");
+								}
+							}
+					}
+					
+					console.log(gameWin);
+					//Word is correct and player wins
+					if (chosen.length === gameWin) {
+					$("#winner").html("Congrats you won! It took you " + counter + " moves. Click here to play again!");
+					$(".wrapper").css("display", "none");
+					letterRight = true;
+					break;
+						}
+							
+					break;
+					
+					}
+					
+	    		
+				//Check if word is correct
+				else if (subLetter === chosen) {
+					
+					for (var i = 0; i < chosen.length; i++) {
+					
+					$(".color" + i).css( "transition", "all .5s");
+					$(".color" + i).css( "color", "green");
+					
+					}
+					$("#winner").html("Congrats you won! It took you " + counter + " moves. Click here to play again!");
+					$(".wrapper").css("display", "none");
+					letterRight = true;
+					
+					break;
+				}
+
+	    		else {
+						letterRight = false;
+						
+							
+							
+						}
+
+	    		
+		}
+						
+					
+							
+//Add letter to wrong scoreboard
+if (letterRight === false) {
+						fancyLog(subLetter);
+						man ++;
+						console.log(letterArray);
+						
+						$(".man" + man).css("transition", "all .5s");
+						$(".man" + man).css("display", "block");
+						
+						
+						if (man === 7) {
+							$("#winner").html("Sorry you lost! Click here to play again!");
+							$(".wrapper").css("display", "none");
+							
+							for (var i = 0; i < chosen.length; i++) {
+					
+								$(".color" + i).css( "transition", "all .5s");
+								$(".color" + i).css( "color", "green");
+					
+							}
+}
+}
+
+document.querySelector('#submission').value = "";
+letterArray.push(subLetter);
+console.log(letterArray);
+
+}
+	}
+
+
+/*
 if (subLetter != "") {
 //How many hangman items are displayed
 counter ++;
@@ -114,6 +239,8 @@ for (var i = 0; i < chosen.length; i++) {
 					$(".color" + i).css( "color", "green");
 					letterRight = true;
 					gameWin++;
+					letterArray.push(subLetter);
+					console.log(letterArray);
 					
 					if (chosen.split(subLetter).length-1 > 1) {
 							str = chosen.replaceAt(i, "2");
@@ -194,11 +321,16 @@ document.querySelector('#submission').value = "";
 
 
 }
+
+else if (subLetter = letterArray) {
+	alert("You already used that letter!")
+}
+
 else {
 	alert("You did not put in a letter!")
 }
 }
-
+*/
 //Add Buttons
 
 document.querySelector('#submit').addEventListener('click', function() {
